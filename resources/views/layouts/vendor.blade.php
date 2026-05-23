@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ $title ?? 'Vendor - ArenaX' }}</title>
+    @if(file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @else
+        <script src="https://cdn.tailwindcss.com"></script>
+    @endif
+</head>
+<body class="bg-[#05070f] text-slate-100">
+    <div class="min-h-screen md:flex">
+        <aside class="border-b border-white/10 bg-black/40 p-4 md:min-h-screen md:w-64 md:border-b-0 md:border-r">
+            <a href="{{ route('vendor.dashboard') }}" class="flex items-center gap-3 font-black"><span class="grid size-9 place-items-center rounded-xl bg-gradient-to-br from-lime-300 via-cyan-300 to-violet-400 text-slate-950">VX</span>Vendor Studio</a>
+            <nav class="mt-8 grid gap-2 text-sm">
+                @foreach([['vendor.dashboard','Overview'],['vendor.venues.index','Grounds'],['vendor.slots.index','Slots'],['vendor.bookings.index','Bookings'],['vendor.earnings.index','Earnings'],['vendor.offers.index','Offers'],['vendor.coupons.index','Coupons'],['vendor.reviews.index','Reviews']] as [$route,$label])
+                    <a href="{{ route($route) }}" class="rounded-xl px-3 py-2 text-slate-300 hover:bg-white/10 hover:text-white">{{ $label }}</a>
+                @endforeach
+                <a href="{{ route('home') }}" class="rounded-xl px-3 py-2 text-slate-300 hover:bg-white/10 hover:text-white">Marketplace</a>
+            </nav>
+        </aside>
+        <main class="flex-1 p-4 pb-24 md:p-8">
+            @if(session('status'))<div class="mb-5 rounded-xl border border-lime-400/30 bg-lime-400/10 px-4 py-3 text-sm">{{ session('status') }}</div>@endif
+            @yield('content')
+        </main>
+    </div>
+</body>
+</html>

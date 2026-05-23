@@ -1,0 +1,6 @@
+@extends('layouts.vendor', ['title' => 'Vendor Coupons'])
+@section('content')
+<h1 class="text-3xl font-black">Coupons</h1>
+<form method="POST" action="{{ route('vendor.coupons.store') }}" class="mt-6 grid gap-3 rounded-3xl border border-white/10 bg-white/[.04] p-4 md:grid-cols-4">@csrf<input name="code" placeholder="CODE" class="rounded-xl bg-black/30 px-3 py-2"><select name="type" class="rounded-xl bg-black/30 px-3 py-2"><option value="percent">Percent</option><option value="fixed">Fixed</option></select><input name="value" placeholder="Value" class="rounded-xl bg-black/30 px-3 py-2"><input name="max_discount" placeholder="Max discount" class="rounded-xl bg-black/30 px-3 py-2"><input name="expires_at" type="date" class="rounded-xl bg-black/30 px-3 py-2"><input name="usage_limit" placeholder="Usage limit" class="rounded-xl bg-black/30 px-3 py-2"><input name="description" placeholder="Description" class="rounded-xl bg-black/30 px-3 py-2"><button class="rounded-xl bg-lime-300 font-bold text-slate-950">Create</button></form>
+<div class="mt-6 grid gap-3">@foreach($coupons as $coupon)<div class="rounded-2xl border border-white/10 bg-white/[.04] p-4"><b>{{ $coupon->code }}</b><p class="text-sm text-slate-400">{{ $coupon->type }} {{ $coupon->value }} · used {{ $coupon->used_count }}</p></div>@endforeach</div>
+@endsection

@@ -1,0 +1,5 @@
+@extends('layouts.vendor', ['title' => 'Vendor Grounds'])
+@section('content')
+<div class="flex items-center justify-between"><h1 class="text-3xl font-black">My grounds</h1><a href="{{ route('vendor.venues.create') }}" class="rounded-xl bg-lime-300 px-4 py-2 font-bold text-slate-950">Add ground</a></div>
+<div class="mt-6 grid gap-4 md:grid-cols-3">@foreach($venues as $venue)<div class="rounded-3xl border border-white/10 bg-white/[.04] p-4"><img src="{{ $venue->images->first()?->path }}" class="h-40 w-full rounded-2xl object-cover"><b class="mt-4 block">{{ $venue->name }}</b><p class="text-sm text-slate-400">{{ $venue->city }} · {{ $venue->status }} · ₹{{ number_format($venue->base_price) }}</p><div class="mt-4 flex gap-2"><a href="{{ route('vendor.venues.edit',$venue) }}" class="rounded-xl border border-white/15 px-3 py-2 text-sm">Edit</a><form method="POST" action="{{ route('vendor.venues.destroy',$venue) }}">@csrf @method('DELETE')<button class="rounded-xl border border-red-300/30 px-3 py-2 text-sm text-red-200">Delete</button></form></div></div>@endforeach</div><div class="mt-5">{{ $venues->links() }}</div>
+@endsection

@@ -1,0 +1,5 @@
+@extends('layouts.admin', ['title' => 'Vendors'])
+@section('content')
+<h1 class="text-3xl font-black">Vendor approvals</h1>
+<div class="mt-6 grid gap-3">@foreach($vendors as $vendor)<div class="grid gap-4 rounded-3xl border border-white/10 bg-white/[.04] p-4 lg:grid-cols-[1fr_auto]"><div><b>{{ $vendor->business_name }}</b><p class="text-sm text-slate-400">{{ $vendor->owner_name }} · {{ $vendor->city }} · {{ $vendor->phone }}</p><p class="mt-2 text-xs text-slate-500">{{ $vendor->venues_count }} venues · {{ $vendor->status }}</p></div><form method="POST" action="{{ route('admin.vendors.update',$vendor) }}" class="grid gap-2 md:grid-cols-[160px_220px_auto]">@csrf @method('PUT')<select name="status" class="rounded-xl bg-black/30 px-3 py-2">@foreach(['pending','approved','rejected','blocked'] as $status)<option @selected($vendor->status===$status)>{{ $status }}</option>@endforeach</select><input name="rejection_reason" placeholder="Reason" class="rounded-xl bg-black/30 px-3 py-2"><button class="rounded-xl bg-lime-300 px-4 py-2 font-bold text-slate-950">Update</button></form></div>@endforeach</div><div class="mt-5">{{ $vendors->links() }}</div>
+@endsection

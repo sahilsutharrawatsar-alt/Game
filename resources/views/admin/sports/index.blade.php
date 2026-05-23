@@ -1,0 +1,6 @@
+@extends('layouts.admin', ['title' => 'Sports'])
+@section('content')
+<h1 class="text-3xl font-black">Sports</h1>
+<form method="POST" action="{{ route('admin.sports.store') }}" class="mt-6 grid gap-3 rounded border border-white/10 bg-white/[.04] p-4 md:grid-cols-4">@csrf<input name="name" placeholder="Name" class="rounded bg-black/30 px-3 py-2"><input name="icon" placeholder="Icon" class="rounded bg-black/30 px-3 py-2"><input name="description" placeholder="Description" class="rounded bg-black/30 px-3 py-2"><button class="rounded bg-lime-400 font-bold text-slate-950">Add</button></form>
+<div class="mt-6 grid gap-3">@foreach($sports as $sport)<form method="POST" action="{{ route('admin.sports.update',$sport) }}" class="grid gap-3 rounded border border-white/10 bg-white/[.04] p-4 md:grid-cols-5">@csrf @method('PUT')<input name="name" value="{{ $sport->name }}" class="rounded bg-black/30 px-3 py-2"><input name="icon" value="{{ $sport->icon }}" class="rounded bg-black/30 px-3 py-2"><input name="description" value="{{ $sport->description }}" class="rounded bg-black/30 px-3 py-2"><label class="flex items-center gap-2"><input type="checkbox" name="is_active" value="1" @checked($sport->is_active)> Active</label><button class="rounded border border-white/15 px-3 py-2">Save</button></form>@endforeach</div>
+@endsection

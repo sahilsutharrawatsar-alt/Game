@@ -1,0 +1,5 @@
+@extends('layouts.admin', ['title' => 'Bookings'])
+@section('content')
+<h1 class="text-3xl font-black">Bookings</h1>
+<div class="mt-6 overflow-x-auto rounded-lg border border-white/10"><table class="w-full text-left text-sm"><thead class="bg-white/[.04] text-slate-400"><tr><th class="p-3">No</th><th>User</th><th>Venue</th><th>Date</th><th>Total</th><th>Status</th></tr></thead><tbody>@foreach($bookings as $booking)<tr class="border-t border-white/10"><td class="p-3">{{ $booking->booking_number }}</td><td>{{ $booking->user->name }}</td><td>{{ $booking->venue->name }}</td><td>{{ $booking->starts_at->format('d M h:i A') }}</td><td>₹{{ number_format($booking->total) }}</td><td><form method="POST" action="{{ route('admin.bookings.update',$booking) }}">@csrf @method('PUT')<select name="status" onchange="this.form.submit()" class="rounded bg-black/30 px-2 py-1">@foreach(['pending','confirmed','rejected','cancelled','completed'] as $s)<option @selected($booking->status===$s)>{{ $s }}</option>@endforeach</select></form></td></tr>@endforeach</tbody></table></div><div class="mt-5">{{ $bookings->links() }}</div>
+@endsection
